@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller

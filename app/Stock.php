@@ -4,22 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Stock extends Model
 {
     protected $guarded = [];
 
-    public function user()
+    public function company()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function products()
     {
         return $this->hasMany(Product::class);
-    }
-
-    public function stocks()
-    {
-        return $this->hasMany(Stock::class);
     }
 }
