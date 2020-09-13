@@ -49,7 +49,7 @@ class ClientController extends Controller
      * @param ClientRequest|Request $request
      * @return ClientResource
      */
-    public function store(ClientRequest $request)
+    public function store(Request $request)
     {
         $client = new Client;
 
@@ -93,7 +93,7 @@ class ClientController extends Controller
      * @param  \App\Client $client
      * @return ClientResource
      */
-    public function update(ClientRequest $request, Client $client)
+    public function update(Request $request, Client $client)
     {
         $client = Client::where("id", $client->id)->first();
 

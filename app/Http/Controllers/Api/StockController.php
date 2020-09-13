@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\StockRequest;
 use App\Http\Controllers\Controller;
@@ -49,7 +50,7 @@ class StockController extends Controller
      * @param StockRequest|Request $request
      * @return StockResource
      */
-    public function store(StockRequest $request)
+    public function store(Request $request)
     {
         $stock = new Stock;
 
@@ -123,20 +124,27 @@ class StockController extends Controller
     /**
      *Reports of stocks on different request type
      * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|void
+     * @return StockCollection
      */
     public function reports(Request $request)
     {
         $type = $request->type;
+        $companyId = $this->getAuthUser()->company_id;
+        $today = Carbon::now()->format('Y-m-d');
+        //2020-09-13
+        $start = Carbon::parse($request->start)->format('Y-m-d');
+        $end = Carbon::parse($request->end)->format('Y-m-d');
 
         switch ($type) {
 
             case "DAILY":
-                return;
+                $stock = Stock::where('company_id', $companyId)->whereDate('updated_at', $today)->orderBy('id', 'DESC')->get();
+                return new StockCollection($stock);
                 break;
 
             case "DATES":
-                return;
+                $stock = Stock::where('company_id', $companyId)->whereBetween('updated_at', [$start, $end])->orderBy('id', 'DESC')->get();
+                return new StockCollection($stock);
                 break;
 
             default:

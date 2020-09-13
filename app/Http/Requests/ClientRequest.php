@@ -27,9 +27,8 @@ class ClientRequest extends FormRequest
         switch ($detectHttpVerb) {
             case 'POST': {
                 return [
-                    'company_id' => 'required',
                     'name' => 'required',
-                    'phone' => 'nullable',
+                    'phone' => 'required',
                     'email' => 'required',
                     'address' > 'nullable'
                 ];
@@ -40,7 +39,6 @@ class ClientRequest extends FormRequest
 
                 $id = $client->id;
                 return [
-                    'company_id' => 'required',
                     'name' => 'required',
                     'phone' => 'unique:clients,phone,' . $id,
                     'email' => 'unique:clients,email,' . $id,

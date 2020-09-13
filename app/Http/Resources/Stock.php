@@ -16,12 +16,11 @@ class Stock extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product_id' => $this->product_id,
-            'company_id' => $this->company_id,
-            'company_name' =>$this->company->name,
             'quantity' => $this->quantity,
+            'product_name' => $this->product->name,
             'purchased_price' => $this->purchased_price,
-            'unit_price' => $this->unit_price
+            'unit_price' => $this->unit_price,
+            'stock_value' => $this->quantity * $this->unit_price
         ];
     }
 }

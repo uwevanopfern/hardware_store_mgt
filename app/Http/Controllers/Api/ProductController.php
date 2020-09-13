@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Product;
+use App\Stock;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,7 @@ class ProductController extends Controller
      * @param ProductRequest|Request $request
      * @return ProductResource
      */
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
         $product = new Product;
 
@@ -59,12 +60,20 @@ class ProductController extends Controller
 
         $product->company_id = $companyId;
         $product->name = $request->name;
-        $product->quantity = $request->quantity;
-        $product->manufacturer = $request->notes;
+        $product->manufacturer = $request->manufacturer;
         $product->category = $request->category;
         $product->weight = $request->weight;
         $product->save();
-        return new ProductResource($product);
+        if ($product) {
+            $stock = new Stock;
+            $stock->company_id = $companyId;
+            $stock->product_id = $product->id;
+            $stock->quantity = $request->quantity;
+            $stock->purchased_price = $request->purchased_price;
+            $stock->unit_price = $request->unit_price;
+            $stock->save();
+            return new ProductResource($product);
+        }
     }
 
     /**
@@ -96,7 +105,7 @@ class ProductController extends Controller
      * @param  \App\Product $product
      * @return ProductResource
      */
-    public function update(ProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         $product = Product::where("id", $product->id)->first();
 
@@ -104,7 +113,6 @@ class ProductController extends Controller
 
         $product->company_id = $companyId;
         $product->name = $request->name;
-        $product->quantity = $request->quantity;
         $product->manufacturer = $request->notes;
         $product->category = $request->category;
         $product->weight = $request->weight;

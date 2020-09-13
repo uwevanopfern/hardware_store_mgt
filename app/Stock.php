@@ -13,8 +13,8 @@ class Stock extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function products()
+    public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class);
     }
 }
