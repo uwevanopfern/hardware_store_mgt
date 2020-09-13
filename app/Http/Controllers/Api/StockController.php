@@ -119,4 +119,28 @@ class StockController extends Controller
         $stock->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     *Reports of stocks on different request type
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|void
+     */
+    public function reports(Request $request)
+    {
+        $type = $request->type;
+
+        switch ($type) {
+
+            case "DAILY":
+                return;
+                break;
+
+            case "DATES":
+                return;
+                break;
+
+            default:
+                return response(['Oops' => "Your choice is incorrect, use either DAILY, or DATES as type"]);
+        }
+    }
 }
