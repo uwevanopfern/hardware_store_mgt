@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Sale;
 use App\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\SalesRequest;
 use App\Http\Controllers\Controller;
@@ -58,10 +59,10 @@ class SaleController extends Controller
         $stock = $request->stock_id;
 
         if (request()->has('discount')) {
-            $taxRate = request()->tax_rate;
-            $discount = request()->discount;
+            $taxRate = $request->tax_rate;
+            $discount = $request->discount;
 
-            $totalAmount = request()->total_amount;
+            $totalAmount = $request->total_amount;
 
             $totalAmountOnDiscount = $totalAmount * $discount / 100;
             $receiptSignature = bin2hex(openssl_random_pseudo_bytes(10));
@@ -90,9 +91,9 @@ class SaleController extends Controller
             $this->deductStock($stock, $request->quantity_sold);
             $sale->save();
         } else {
-            $taxRate = request()->tax_rate;
+            $taxRate = $request->tax_rate;
 
-            $totalAmount = request()->total_amount;
+            $totalAmount = $request->total_amount;
             $receiptSignature = bin2hex(openssl_random_pseudo_bytes(10));
 
             $taxAmount = $totalAmount * $taxRate / 100;
@@ -161,10 +162,10 @@ class SaleController extends Controller
         $stock = $request->stock_id;
 
         if (request()->has('discount')) {
-            $taxRate = request()->tax_rate;
-            $discount = request()->discount;
+            $taxRate = $request->tax_rate;
+            $discount = $request->discount;
 
-            $totalAmount = request()->total_amount;
+            $totalAmount = $request->total_amount;
 
             $totalAmountOnDiscount = $totalAmount * $discount / 100;
             $receiptSignature = bin2hex(openssl_random_pseudo_bytes(10));
@@ -193,9 +194,9 @@ class SaleController extends Controller
             $this->deductStock($stock, $request->quantity_sold);
             $sale->save();
         } else {
-            $taxRate = request()->tax_rate;
+            $taxRate = $request->tax_rate;
 
-            $totalAmount = request()->total_amount;
+            $totalAmount = $request->total_amount;
             $receiptSignature = bin2hex(openssl_random_pseudo_bytes(10));
 
             $taxAmount = $totalAmount * $taxRate / 100;
@@ -271,5 +272,36 @@ class SaleController extends Controller
         $stock->quantity = $newQuantity;
         $stock->save();
         return $stock->fresh();
+    }
+
+    /**
+     *Reports of sales on different request type
+     * @param Request $request
+     * @return SalesCollection
+     */
+    public function reports(Request $request)
+    {
+        $type = $request->type;
+        $companyId = $this->getAuthUser()->company_id;
+        $today = Carbon::now()->format('Y-m-d');
+        //2020-09-13
+        $start = Carbon::parse($request->start)->format('Y-m-d');
+        $end = Carbon::parse($request->end)->format('Y-m-d');
+
+        switch ($type) {
+
+            case "DAILY":
+                $stock = Sale::where('company_id', $companyId)->whereDate('updated_at', $today)->orderBy('id', 'DESC')->get();
+                return new SalesCollection($stock);
+                break;
+
+            case "DATES":
+                $stock = Sale::where('company_id', $companyId)->whereBetween('updated_at', [$start, $end])->orderBy('id', 'DESC')->get();
+                return new SalesCollection($stock);
+                break;
+
+            default:
+                return response(['Oops' => "Your choice is incorrect, use either DAILY, or DATES as type"]);
+        }
     }
 }
