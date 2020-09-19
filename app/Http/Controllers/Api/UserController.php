@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -42,7 +42,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|alpha_num|min:3|max:20',
+            'name' => 'required|min:3|max:20',
             'email' => [
                 // the standard "email" rule
                 'Email',
@@ -76,7 +76,7 @@ class UserController extends Controller
         $tokenResult = $user->createToken('Personal Access Token');
 
         //send email verification
-        $user->sendEmailVerificationNotification();
+//        $user->sendEmailVerificationNotification();
 
         return response([
             'user' => new UserResource($user),
@@ -147,7 +147,7 @@ class UserController extends Controller
         ]);
 
         //Check if user exists
-        if (!Auth::attempt($validated))
+        if (!Auth::guard('web')->attempt($validated))
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid credentials, Try again!'], Response::HTTP_UNAUTHORIZED);

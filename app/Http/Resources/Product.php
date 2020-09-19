@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Stock as StockResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+
+class Product extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,8 +21,10 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'company_id' => $this->company_id,
             'company_name' => $this->company->name,
-            'phone' => $this->phone,
-            'email' => $this->email
+            'manufacturer' => $this->manufacturer,
+            'category' => $this->category,
+            'weight' => $this->weight,
+            'stock' => new StockResource($this->stock)
         ];
     }
 }

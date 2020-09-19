@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('/companies', 'CompanyController');
 });
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');
