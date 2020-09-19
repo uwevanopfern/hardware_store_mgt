@@ -7,7 +7,7 @@ export default new Vuex.Store({
     state: {
         api: {
             /*Parameters to use on offline local server*/
-            locServerUrl: "http://127.0.0.1:9000/",
+            locServerUrl: "",
 
             /*Parameters to use on online server*/
             prodServerUrl: "",

@@ -52175,7 +52175,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   state: {
     api: {
       /*Parameters to use on offline local server*/
-      locServerUrl: "http://127.0.0.1:9000/",
+      locServerUrl: "",
 
       /*Parameters to use on online server*/
       prodServerUrl: "",
