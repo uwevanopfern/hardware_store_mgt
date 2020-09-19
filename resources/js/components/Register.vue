@@ -22,22 +22,30 @@
             <form @submit.prevent="register()">
               <div class="form-group">
                 <div class="form-label-group">
-                  <label class="form-label" for="default-01">Email or Username</label>
-                  <a class="link link-primary link-sm" tabindex="-1" href="#">Need Help?</a>
+                  <label class="form-label" for>Email</label>
                 </div>
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="default-01"
                   placeholder="Enter your email address"
                   v-model="form.email"
+                />
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <label class="form-label" for>Name</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  placeholder="Enter your name"
+                  v-model="form.name"
                 />
               </div>
               <!-- .foem-group -->
               <div class="form-group">
                 <div class="form-label-group">
                   <label class="form-label" for="password">Password</label>
-                  <a class="link link-primary link-sm" tabindex="-1" href="#">Forgot Password?</a>
                 </div>
                 <div class="form-control-wrap">
                   <a
@@ -56,6 +64,56 @@
                     placeholder="Enter your password"
                     v-model="form.password"
                   />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <label class="form-label" for="confirm-password">Confirm Password</label>
+                </div>
+                <div class="form-control-wrap">
+                  <a
+                    tabindex="-1"
+                    href="#"
+                    class="form-icon form-icon-right passcode-switch"
+                    data-target="password"
+                  >
+                    <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                    <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                  </a>
+                  <input
+                    type="password"
+                    class="form-control form-control-lg"
+                    id="confirm-password"
+                    placeholder="Re-type the password"
+                    v-model="form.password_confirmation"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <label class="form-label" for>Phone</label>
+                </div>
+                <input
+                  type="tel"
+                  class="form-control form-control-lg"
+                  id
+                  placeholder="07XXXXXXXX"
+                  v-model="form.phone"
+                />
+              </div>
+              <div class="form-group">
+                <div class="custom-control custom-control-xs custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="checkbox"
+                    v-model="form.agreed_to_terms"
+                  />
+                  <label class="custom-control-label" for="checkbox">
+                    I agree to Hardware Store
+                    <a tabindex="-1" href="#">Privacy Policy</a> &amp;
+                    <a tabindex="-1" href="#">Terms.</a>
+                  </label>
                 </div>
               </div>
               <!-- .foem-group -->
@@ -86,7 +144,12 @@ export default {
     return {
       form: {
         email: "",
+        name: "",
+        phone: "",
+        company_id: "1",
         password: "",
+        password_confirmation: "",
+        agreed_to_terms: "",
       },
     };
   },
@@ -98,7 +161,11 @@ export default {
      */
     register() {
       this.$http
-        .post(this.$store.state.api.path.register, this.form)
+        .post(this.$store.state.api.path.register, this.form, {
+          headers: {
+            Authorization: this.$store.state.api.token,
+          },
+        })
         .then((res) => {
           console.log("res", res);
         })
