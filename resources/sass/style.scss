@@ -1,0 +1,28 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+.nk-body {
+    .nk-app-root {
+        .nk-split {
+            display: flex;
+            justify-content: center;
+            .nk-split-content {
+                .brand-logo {
+                    h3 {
+                        text-align: center;
+                        text-transform: uppercase;
+                    }
+                }
+                .nk-auth-footer{
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
