@@ -24,3 +24,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin-login', function(){
+    return view('layouts.login');
+});
+
+Route::get('/admin-register', function(){
+    return view('layouts.register');
+});

@@ -1,0 +1,178 @@
+<template>
+  <div class="nk-body npc-crypto ui-clean pg-auth">
+    <!-- app body @s -->
+    <div class="nk-app-root">
+      <div class="nk-split nk-split-page nk-split-md">
+        <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container">
+          <div class="absolute-top-right d-lg-none p-3 p-sm-5">
+            <a href="#" class="toggle btn-white btn btn-icon btn-light" data-target="athPromo">
+              <em class="icon ni ni-info"></em>
+            </a>
+          </div>
+          <div class="nk-block nk-block-middle nk-auth-body">
+            <div class="brand-logo pb-5">
+              <h3 class="nk-block-title">Hardware Store</h3>
+            </div>
+            <div class="nk-block-head">
+              <div class="nk-block-head-content">
+                <h5 class="nk-block-title">Register</h5>
+              </div>
+            </div>
+            <!-- .nk-block-head -->
+            <form @submit.prevent="register()">
+              <div class="form-group">
+                <div class="form-label-group">
+                  <label class="form-label" for>Email</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  placeholder="Enter your email address"
+                  v-model="form.email"
+                />
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <label class="form-label" for>Name</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  placeholder="Enter your name"
+                  v-model="form.name"
+                />
+              </div>
+              <!-- .foem-group -->
+              <div class="form-group">
+                <div class="form-label-group">
+                  <label class="form-label" for="password">Password</label>
+                </div>
+                <div class="form-control-wrap">
+                  <a
+                    tabindex="-1"
+                    href="#"
+                    class="form-icon form-icon-right passcode-switch"
+                    data-target="password"
+                  >
+                    <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                    <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                  </a>
+                  <input
+                    type="password"
+                    class="form-control form-control-lg"
+                    id="password"
+                    placeholder="Enter your password"
+                    v-model="form.password"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <label class="form-label" for="confirm-password">Confirm Password</label>
+                </div>
+                <div class="form-control-wrap">
+                  <a
+                    tabindex="-1"
+                    href="#"
+                    class="form-icon form-icon-right passcode-switch"
+                    data-target="password"
+                  >
+                    <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                    <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                  </a>
+                  <input
+                    type="password"
+                    class="form-control form-control-lg"
+                    id="confirm-password"
+                    placeholder="Re-type the password"
+                    v-model="form.password_confirmation"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-label-group">
+                  <label class="form-label" for>Phone</label>
+                </div>
+                <input
+                  type="tel"
+                  class="form-control form-control-lg"
+                  id
+                  placeholder="07XXXXXXXX"
+                  v-model="form.phone"
+                />
+              </div>
+              <div class="form-group">
+                <div class="custom-control custom-control-xs custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="checkbox"
+                    v-model="form.agreed_to_terms"
+                  />
+                  <label class="custom-control-label" for="checkbox">
+                    I agree to Hardware Store
+                    <a tabindex="-1" href="#">Privacy Policy</a> &amp;
+                    <a tabindex="-1" href="#">Terms.</a>
+                  </label>
+                </div>
+              </div>
+              <!-- .foem-group -->
+              <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+              </div>
+            </form>
+            <!-- form -->
+          </div>
+          <!-- .nk-block -->
+          <div class="nk-block nk-auth-footer">
+            <div class="mt-3">
+              <p>&copy; 2020 Hardware Store. All Rights Reserved.</p>
+            </div>
+          </div>
+          <!-- .nk-block -->
+        </div>
+      </div>
+      <!-- .nk-split -->
+    </div>
+    <!-- app body @e -->
+    <!-- JavaScript -->
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        email: "",
+        name: "",
+        phone: "",
+        company_id: "1",
+        password: "",
+        password_confirmation: "",
+        agreed_to_terms: "",
+      },
+    };
+  },
+  methods: {
+    /**
+     * Admin register
+     * @param email
+     * @param password
+     */
+    register() {
+      this.$http
+        .post(this.$store.state.api.path.register, this.form, {
+          headers: {
+            Authorization: this.$store.state.api.token,
+          },
+        })
+        .then((res) => {
+          console.log("res", res);
+        })
+        .catch((err) => {
+          console.log("error", err.response);
+        });
+    },
+  },
+};
+</script>
