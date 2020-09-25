@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Client;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientRequest;
-use App\Http\Resources\ClientCollection;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Client as ClientResource;
+use App\Http\Resources\ClientCollection;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class ClientController extends Controller
 {
