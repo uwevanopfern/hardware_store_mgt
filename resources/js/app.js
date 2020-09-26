@@ -4,13 +4,14 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 import store from "./store";
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
+import axios from "axios";
+import router from "./router";
+Vue.use(axios);
+Vue.use(router);
 
 /**
  * The following block of code may be used to automatically register your
@@ -23,9 +24,30 @@ Vue.use(VueAxios, axios)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('login', require('./components/Login.vue').default);
-Vue.component('register', require('./components/Register.vue').default);
+Vue.component("login", require("./components/Login.vue").default);
+Vue.component("register", require("./components/Register.vue").default);
+Vue.component("index", require("./components/Dashboard/index.vue").default);
 
+
+// Vue.prototype.$http = axios;
+const token = localStorage.getItem("token");
+if (token) {
+    axios.defaults.headers.common["Authorization"] = token;
+}
+
+Vue.config.productionTip = false
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (store.getters.isLoggedIn) {
+            next();
+            return;
+        }
+        next("/admin-login");
+    } else {
+        next();
+    }
+});
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -33,6 +55,7 @@ Vue.component('register', require('./components/Register.vue').default);
  */
 
 const app = new Vue({
-    el: '#app',
+    el: "#app",
+    router,
     store
 });

@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 Vue.use(Vuex);
+Vue.use(VueAxios, axios)
 
 export default new Vuex.Store({
     state: {
@@ -14,14 +16,91 @@ export default new Vuex.Store({
 
             /*Parameters to use on online production server*/
             serverUrl: "",
-            token: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMzI3MTQ3ZmM1NGE3NWExNTcxYTk1OWMwM2Q3YzZiNjk1Y2JiZDQ0Y2Q0NzMyYTM0YWE0NzI3ZmMxNTk1NTBhMGRlYTI0OTIxY2QxOTUxNDYiLCJpYXQiOjE2MDA1MzA3MjksIm5iZiI6MTYwMDUzMDcyOSwiZXhwIjoxNjMyMDY2NzI5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.4yocIGP-zAypLbEnV4_0LamGo5t8ZOCMvmxc9cdVmKsAazVqvllUZhoZ_kFZIJ_HlaSAD5A5pqS6UO2oWvyES1D_k7CBBiSmJANrMBrtuQQI6JdEX70foftf4YkCXW4qB3pNFXPZMzCyBHB_Vme31WguYG_H_DfCxuLbpSYagN_F3xrsqr4Eb9kMB3veglM6iGqt2MK52YbNZ1X4NvwqTBBC5lYhZ8vkAyBWd13eeXmv7yfoRmCSr5qUe45LQ1tsEebWXQHtEwi8gnm_89Wzr2nXDGuZqlG2N4y1FI6U0h7nxYIXli4P3kU_zL2Wcq1ebZp47O3n81C3iBf9Ds7hf6UgoH0AQ36NoUCEMh8R1kzwXiywMqkvYAYg_Khtn2elD_GHzqllxmSqvx258vmvNqC43R6LDsKM4MyzCeC8jUaWveHTQ72oiZWnOnIra3UWW7o43mgwJ2zmVsT3zhpxD_GndnADoMwrrPGUC05tvuFClk6ieUkmmDnDE4--9xc3kabUqLcVuCKXgDmNQTi-23fCOGaaM_qSsNtpPSnXmVc5ifpnwP2Wt2CFlC6LBNkd18b91OpcsqMxh_zaMJyvNdPYyjfhv64sSpo9PFTVKWNlG5A_KWpya2Pw5PzMJq9QYp4WM360nUkvAt8sQVfWp5UcHQpthssqSwPJGpIGEq8",
+            token: localStorage.getItem("token") || "",
+            status: "",
+            user: {},
             path: {
                 login: "api/login", // Admin login
                 register: "api/users" // Admin register
             }
         }
     },
-    mutations: {},
-    actions: {},
-    getters: {}
+    mutations: {
+        auth_request(state) {
+            state.status = "loading";
+        },
+        auth_success(state, token, user) {
+            state.status = "success";
+            state.token = token;
+            state.user = user;
+        },
+        auth_error(state) {
+            state.status = "error";
+        },
+        logout(state) {
+            state.status = "";
+            state.token = "";
+        }
+    },
+    actions: {
+        login({ commit }, user) {
+            return new Promise((resolve, reject) => {
+                commit("auth_request");
+                axios({
+                    url: this.state.api.path.login,
+                    data: user,
+                    method: "POST"
+                })
+                    .then(resp => {
+                        const token = resp.data.token;
+                        const user = resp.data.user;
+                        localStorage.setItem("token", token);
+                        axios.defaults.headers.common["Authorization"] = token;
+                        commit("auth_success", token, user);
+                        resolve(resp);
+                    })
+                    .catch(err => {
+                        commit("auth_error");
+                        localStorage.removeItem("token");
+                        reject(err);
+                    });
+            });
+        },
+        register({ commit }, user) {
+            return new Promise((resolve, reject) => {
+                commit("auth_request");
+                axios({
+                    url: this.state.api.path.register,
+                    data: user,
+                    method: "POST"
+                })
+                    .then(resp => {
+                        const token = resp.data.token;
+                        const user = resp.data.user;
+                        console.log('resp', resp)
+                        localStorage.setItem("token", token);
+                        axios.defaults.headers.common["Authorization"] = token;
+                        commit("auth_success", token, user);
+                        resolve(resp);
+                    })
+                    .catch(err => {
+                        commit("auth_error", err);
+                        localStorage.removeItem("token");
+                        reject(err);
+                    });
+            });
+        },
+        logout({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit("logout");
+                localStorage.removeItem("token");
+                delete axios.defaults.headers.common["Authorization"];
+                resolve();
+            });
+        }
+    },
+    getters: {
+        isLoggedIn: state => !!state.token,
+        authStatus: state => state.status
+    }
 });

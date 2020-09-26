@@ -160,18 +160,9 @@ export default {
      * @param password
      */
     register() {
-      this.$http
-        .post(this.$store.state.api.path.register, this.form, {
-          headers: {
-            Authorization: this.$store.state.api.token,
-          },
-        })
-        .then((res) => {
-          console.log("res", res);
-        })
-        .catch((err) => {
-          console.log("error", err.response);
-        });
+      this.$store.dispatch('register', this.form)
+       .then(() => this.$router.push('/dashboard'))
+       .catch(err => console.log(err))
     },
   },
 };

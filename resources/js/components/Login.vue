@@ -3,9 +3,15 @@
     <!-- app body @s -->
     <div class="nk-app-root">
       <div class="nk-split nk-split-page nk-split-md">
-        <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container">
+        <div
+          class="nk-split-content nk-block-area nk-block-area-column nk-auth-container"
+        >
           <div class="absolute-top-right d-lg-none p-3 p-sm-5">
-            <a href="#" class="toggle btn-white btn btn-icon btn-light" data-target="athPromo">
+            <a
+              href="#"
+              class="toggle btn-white btn btn-icon btn-light"
+              data-target="athPromo"
+            >
               <em class="icon ni ni-info"></em>
             </a>
           </div>
@@ -17,7 +23,9 @@
               <div class="nk-block-head-content">
                 <h5 class="nk-block-title">Sign-In</h5>
                 <div class="nk-block-des">
-                  <p>Access the dashboard panel using your email and password.</p>
+                  <p>
+                    Access the dashboard panel using your email and password.
+                  </p>
                 </div>
               </div>
             </div>
@@ -25,8 +33,12 @@
             <form @submit.prevent="login()">
               <div class="form-group">
                 <div class="form-label-group">
-                  <label class="form-label" for="default-01">Email or Username</label>
-                  <a class="link link-primary link-sm" tabindex="-1" href="#">Need Help?</a>
+                  <label class="form-label" for="default-01"
+                    >Email or Username</label
+                  >
+                  <a class="link link-primary link-sm" tabindex="-1" href="#"
+                    >Need Help?</a
+                  >
                 </div>
                 <input
                   type="text"
@@ -40,7 +52,9 @@
               <div class="form-group">
                 <div class="form-label-group">
                   <label class="form-label" for="password">Password</label>
-                  <a class="link link-primary link-sm" tabindex="-1" href="#">Forgot Password?</a>
+                  <a class="link link-primary link-sm" tabindex="-1" href="#"
+                    >Forgot Password?</a
+                  >
                 </div>
                 <div class="form-control-wrap">
                   <a
@@ -63,7 +77,9 @@
               </div>
               <!-- .foem-group -->
               <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                  Sign in
+                </button>
               </div>
             </form>
             <!-- form -->
@@ -100,14 +116,10 @@ export default {
      * @param password
      */
     login() {
-      this.$http
-        .post(this.$store.state.api.path.login, this.form)
-        .then((res) => {
-          console.log("res", res);
-        })
-        .catch((err) => {
-          console.log("error", err.response);
-        });
+      this.$store
+        .dispatch("login", this.form)
+        .then((res) => this.$router.push("/dashboard"))
+        .catch((err) => console.log(err));
     },
   },
 };
