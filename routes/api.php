@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('/products', 'Api\ProductController');
     Route::apiResource('/sales', 'Api\SaleController');
     Route::apiResource('/stocks', 'Api\StockController');
+    Route::apiResource('/companies', 'CompanyController');
 
     Route::group(['prefix' => 'reports'], function () {
         Route::post('stock', 'Api\StockController@reports');
