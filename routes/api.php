@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/users', 'Api\UserController');
+Route::get('/all-companies', 'CompanyController@getCompaniesAPI');
+Route::post('/add-company', 'CompanyController@createCompanyAPI');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
@@ -30,7 +32,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('/products', 'Api\ProductController');
     Route::apiResource('/sales', 'Api\SaleController');
     Route::apiResource('/stocks', 'Api\StockController');
-    Route::apiResource('/companies', 'CompanyController');
 
     Route::group(['prefix' => 'reports'], function () {
         Route::post('stock', 'Api\StockController@reports');

@@ -37,7 +37,7 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|unique:companies'
+            'name' => 'required|string|unique:companies',
         ]);
 
         $company = new Company;
@@ -86,7 +86,7 @@ class CompanyController extends Controller
         //$this->route('post')
         $modelObject = Company::where('id', $company->id)
             ->update([
-                'type_name' => $request->input('name')
+                'type_name' => $request->input('name'),
             ]);
         if ($modelObject) {
             return redirect()->route('companies.index', ['company' => $company->id])->with('success', 'Company updated successfully');
@@ -107,5 +107,30 @@ class CompanyController extends Controller
             return redirect()->route('companies.index')->with('success', 'Company deleted successfully');
         }
         return back()->withInput()->with('errors', 'Company could not deleted');
+    }
+
+    /**
+     * An APi function that gets all companies and return json data
+     */
+    public function getCompaniesAPI()
+    {
+        $companies = Company::orderBy('id', 'DESC')->get();
+        return $companies;
+    }
+
+    /**
+     * An APi function that creates new company and return json data
+     */
+    public function createCompanyAPI(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|unique:companies',
+        ]);
+
+        $company = new Company;
+        $company->name = $request->name;
+        $company->save();
+        
+        return $company;
     }
 }
