@@ -21,12 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('/users', 'Api\UserController');
 Route::get('/all-companies', 'CompanyController@getCompaniesAPI');
 Route::post('/add-company', 'CompanyController@createCompanyAPI');
+Route::post('/login', 'Api\UserController@login');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/profile', 'Api\UserController@me');
     Route::get('/logout', 'Api\UserController@logout');
-    Route::post('/login', 'Api\UserController@login');
 
     Route::apiResource('/clients', 'Api\ClientController');
     Route::apiResource('/products', 'Api\ProductController');
