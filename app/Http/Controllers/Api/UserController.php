@@ -79,6 +79,7 @@ class UserController extends Controller
 //        $user->sendEmailVerificationNotification();
 
         return response([
+            'token_type' => 'Bearer',
             'user' => new UserResource($user),
             'token' => $accessToken,
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
@@ -166,8 +167,8 @@ class UserController extends Controller
         $token->save();
         return response()->json([
             'token_type' => 'Bearer',
-            'murugo_user' => new UserResource(Auth()->User()),
-            'murugo_access_token' => $tokenResult->accessToken,
+            'user' => new UserResource(Auth()->User()),
+            'token' => $tokenResult->accessToken,
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
         ], Response::HTTP_OK);
     }
