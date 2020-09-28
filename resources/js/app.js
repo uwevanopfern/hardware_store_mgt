@@ -26,7 +26,7 @@ Vue.use(router);
 
 Vue.component("login", require("./components/Login.vue").default);
 Vue.component("register", require("./components/Register.vue").default);
-Vue.component("index", require("./components/Dashboard/index.vue").default);
+Vue.component("index", require("./components/Dashboard/Main.vue").default);
 
 
 // Vue.prototype.$http = axios;

@@ -154,13 +154,13 @@ class UserController extends Controller
 
         $user = $request->user();
         //Check if user verified email
-        if ($user->email_verified_at == NULL) {
+        // if ($user->email_verified_at == NULL) {
 
-            return response()->json([
-                'error' => true,
-                'message' => 'Please Verify Email',
-            ], Response::HTTP_UNAUTHORIZED);
-        }
+        //     return response()->json([
+        //         'error' => true,
+        //         'message' => 'Please Verify Email',
+        //     ], Response::HTTP_UNAUTHORIZED);
+        // }
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         $token->save();
