@@ -1,2 +1,46 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
 // Variables
 @import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+html {
+    overflow: scroll;
+    font-family: $site-font;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent !important; /* make scrollbar transparent */
+}
+body {
+    // background-color: $site-background;
+}
+// Client dashboard
+.main-screen {
+    .sidebar-chats {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 30%;
+        background-color: $sidebar-color;
+        border-right: 1px solid $site-gray1;
+        .top-navigation {
+            display: flex;
+            flex-direction: column;
+            .navigation-ribbon {
+                display: flex;
+                justify-content: space-between;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-right: 10px;
+                padding-left: 14px;
+                align-items: center;
+            }
+        }
+    }
+}
+    

@@ -21,6 +21,7 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/app1.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
         <!-- All Generated styles form dashlite -->
         <link rel="stylesheet" href="{{ asset('css/dashlite.css') }}" />

@@ -12,8 +12,14 @@ import axios from "axios";
 import router from "./router";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faAngleRight, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 Vue.use(axios);
 Vue.use(router);
+library.add(faEllipsisV, faAngleRight);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 /**
  * The following block of code may be used to automatically register your

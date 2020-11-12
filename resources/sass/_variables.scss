@@ -2,18 +2,18 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+@font-face {
+    font-family: "sf_pro_displayregular";
+    src: url("/fonts/sfprodisplay-regular-webfont.woff2") format("woff2"),
+        url("/fonts/sfprodisplay-regular-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+$site-font: "sf_pro_displayregular", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
-$blue: #3490dc;
-$indigo: #6574cd;
-$purple: #9561e2;
-$pink: #f66d9b;
-$red: #e3342f;
-$orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
-$teal: #4dc0b5;
-$cyan: #6cb2eb;
+$site-color: #f1f5f9;
+$sidebar-color: #f4f5f7;
+$site-gray1: #e6e9ed
