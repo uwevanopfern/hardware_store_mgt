@@ -10,6 +10,8 @@ window.Vue = require("vue");
 import store from "./store";
 import axios from "axios";
 import router from "./router";
+import "materialize-css";
+import "materialize-css/dist/css/materialize.css";
 Vue.use(axios);
 Vue.use(router);
 
@@ -26,8 +28,8 @@ Vue.use(router);
 
 Vue.component("login", require("./components/Login.vue").default);
 Vue.component("register", require("./components/Register.vue").default);
-Vue.component("index", require("./components/Dashboard/Main.vue").default);
-
+Vue.component("index", require("./views/Dashboard.vue").default);
+Vue.component("admin-header", require("./components/AdminHeader.vue").default);
 
 // Vue.prototype.$http = axios;
 const token = localStorage.getItem("token");
@@ -35,7 +37,7 @@ if (token) {
     axios.defaults.headers.common["Authorization"] = token;
 }
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -43,7 +45,7 @@ router.beforeEach((to, from, next) => {
             next();
             return;
         }
-        next("/admin-login");
+        next("/dashboard");
     } else {
         next();
     }
