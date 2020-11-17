@@ -8,34 +8,22 @@
           <span>Dashboard</span>
         </a-menu-item>
         <a-sub-menu key="inventory">
-          <span slot="title"><a-icon type="stock" /><span>Inventory</span></span>
-          <a-menu-item key="3">
-            Stock
-          </a-menu-item>
-          <a-menu-item key="4">
-            Products
-          </a-menu-item>
-          <a-menu-item key="5">
-            Clients
-          </a-menu-item>
-          <a-menu-item key="6">
-            Journal
-          </a-menu-item>
+          <span slot="title"
+            ><a-icon type="stock" /><span>Inventory</span></span
+          >
+          <a-menu-item key="3"> Stock </a-menu-item>
+          <a-menu-item key="4"> Products </a-menu-item>
+          <a-menu-item key="5"> Clients </a-menu-item>
+          <a-menu-item key="6"> Journal </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="reports">
-          <span slot="title"><a-icon type="project" /><span>Reports</span></span>
-          <a-menu-item key="3">
-            Stock
-          </a-menu-item>
-          <a-menu-item key="4">
-            Products
-          </a-menu-item>
-          <a-menu-item key="5">
-            Clients
-          </a-menu-item>
-          <a-menu-item key="6">
-            Journal
-          </a-menu-item>
+          <span slot="title"
+            ><a-icon type="project" /><span>Reports</span></span
+          >
+          <a-menu-item key="3"> Stock </a-menu-item>
+          <a-menu-item key="4"> Products </a-menu-item>
+          <a-menu-item key="5"> Clients </a-menu-item>
+          <a-menu-item key="6"> Journal </a-menu-item>
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>
@@ -46,7 +34,7 @@
           :type="collapsed ? 'menu-unfold' : 'menu-fold'"
           @click="() => (collapsed = !collapsed)"
         />
-        <user-avatar/>
+        <user-avatar />
       </a-layout-header>
       <a-layout-content
         :style="{
@@ -56,13 +44,15 @@
           minHeight: '280px',
         }"
       >
-        Dashboard
+        <dashboard-overview />
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
+import DashboardOverview from "../components/DashboardOverview.vue";
 export default {
+  components: { DashboardOverview },
   data() {
     return {
       collapsed: false,
@@ -73,7 +63,7 @@ export default {
 <style lang="scss">
 #components-layout-demo-custom-trigger {
   height: 100vh;
-  .logo{
+  .logo {
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -98,7 +88,7 @@ export default {
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
-.anticon{
-      vertical-align: 0 !important;
+.anticon {
+  vertical-align: 0 !important;
 }
 </style>
