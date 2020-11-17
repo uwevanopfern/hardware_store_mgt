@@ -10,8 +10,6 @@ window.Vue = require("vue");
 import store from "./store";
 import axios from "axios";
 import router from "./router";
-import "materialize-css";
-import "materialize-css/dist/css/materialize.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faAngleRight, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
