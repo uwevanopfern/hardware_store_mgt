@@ -1,7 +1,7 @@
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
-      <div class="logo" />
+      <div class="logo">HS</div>
       <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
         <a-menu-item key="1">
           <a-icon type="home" />
@@ -70,9 +70,16 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
 #components-layout-demo-custom-trigger {
   height: 100vh;
+  .logo{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: #ffffff;
+  }
 }
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
