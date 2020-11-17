@@ -15,11 +15,16 @@ import "materialize-css/dist/css/materialize.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faAngleRight, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
+
 
 Vue.use(axios);
 Vue.use(router);
 library.add(faEllipsisV, faAngleRight);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.use(Antd);
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,6 +41,7 @@ Vue.component("login", require("./components/Login.vue").default);
 Vue.component("register", require("./components/Register.vue").default);
 Vue.component("index", require("./views/Dashboard.vue").default);
 Vue.component("admin-header", require("./components/AdminHeader.vue").default);
+Vue.component("user-avatar", require("./components/UserAvatar.vue").default);
 
 // Vue.prototype.$http = axios;
 const token = localStorage.getItem("token");
