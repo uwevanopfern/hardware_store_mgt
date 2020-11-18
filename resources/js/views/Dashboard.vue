@@ -3,7 +3,7 @@
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
       <div class="logo">HS</div>
       <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
-        <a-menu-item key="1">
+        <a-menu-item key="1" @click="navigateTo({ name: 'dashboard-overview' })">
           <a-icon type="home" />
           <span>Dashboard</span>
         </a-menu-item>
@@ -11,17 +11,21 @@
           <span slot="title"
             ><a-icon type="stock" /><span>Inventory</span></span
           >
-          <a-menu-item key="3"> Stock </a-menu-item>
-          <a-menu-item key="4"> Products </a-menu-item>
-          <a-menu-item key="5"> Clients </a-menu-item>
-          <a-menu-item key="6"> Journal </a-menu-item>
+          <a-menu-item key="3" @click="navigateTo({ name: 'products' })">
+            Products
+          </a-menu-item>
+          <a-menu-item key="4" @click="navigateTo({ name: 'stock' })">
+            Stock
+          </a-menu-item>
+          <a-menu-item key="5" @click="navigateTo({ name: 'clients' })"> Clients </a-menu-item>
+          <a-menu-item key="6" @click="navigateTo({ name: 'journal' })"> Journal </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="reports">
           <span slot="title"
             ><a-icon type="project" /><span>Reports</span></span
           >
-          <a-menu-item key="3"> Stock </a-menu-item>
-          <a-menu-item key="4"> Products </a-menu-item>
+          <a-menu-item key="3"> Products </a-menu-item>
+          <a-menu-item key="4"> Stock </a-menu-item>
           <a-menu-item key="5"> Clients </a-menu-item>
           <a-menu-item key="6"> Journal </a-menu-item>
         </a-sub-menu>
@@ -40,11 +44,11 @@
         :style="{
           margin: '24px 16px',
           padding: '24px',
-          background: '#fff',
           minHeight: '280px',
         }"
       >
-        <dashboard-overview />
+        <router-view></router-view>
+        <!-- <dashboard-overview /> -->
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -57,6 +61,13 @@ export default {
     return {
       collapsed: false,
     };
+  },
+  methods: {
+    navigateTo(route) {
+      if (Object.prototype.toString.call(route) === "[object Object]") {
+        this.$router.push(route);
+      }
+    },
   },
 };
 </script>

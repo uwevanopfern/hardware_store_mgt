@@ -11,14 +11,14 @@ import store from "./store";
 import axios from "axios";
 import router from "./router";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faAngleRight, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import { faBalanceScale, faCheckCircle, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 
 Vue.use(axios);
 Vue.use(router);
-library.add(faEllipsisV, faAngleRight);
+library.add(faBalanceScale, faSyncAlt, faCheckCircle);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(Antd);
 

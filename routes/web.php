@@ -34,3 +34,4 @@ Route::get('/admin-login', function () {
 Route::get('/admin-register', function () {
     return view('layouts.register');
 });
+Route::get('/{any}', 'SinglePageController@index')->where('any', '.*');
