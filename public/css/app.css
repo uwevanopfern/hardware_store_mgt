@@ -10918,24 +10918,24 @@ html {
   /* make scrollbar transparent */
 }
 
-.row {
+.ant-layout-content .row {
   margin-bottom: 30px;
 }
 
-.row .row-title {
+.ant-layout-content .row .row-title {
   width: 100%;
   padding: 15px 0;
   font-size: 16px;
   color: #001529;
 }
 
-.row .overview-cards {
+.ant-layout-content .row .overview-cards {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.row .overview-cards .card-item {
+.ant-layout-content .row .overview-cards .card-item {
   box-shadow: 0px 3px 6px #6892fb29;
   border-radius: 10px;
   opacity: 1;
@@ -10943,48 +10943,52 @@ html {
   width: 30%;
 }
 
-.row .overview-cards .card-item .card-body {
+.ant-layout-content .row .overview-cards .card-item .card-body {
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: flex-start;
 }
 
-.row .overview-cards .card-item .card-body .icon {
+.ant-layout-content .row .overview-cards .card-item .card-body .icon {
   padding: 0 10px;
   font-size: 20px;
 }
 
-.row .overview-cards .card-item .card-body .title-amount {
+.ant-layout-content .row .overview-cards .card-item .card-body .title-amount {
   padding: 0 10px;
 }
 
-.row .overview-cards .card-item .card-body .title-amount p {
+.ant-layout-content .row .overview-cards .card-item .card-body .title-amount p {
   margin: 0;
   padding: 0;
 }
 
-.row .overview-cards .card-item .card-body .title-amount .title {
+.ant-layout-content .row .overview-cards .card-item .card-body .title-amount .title {
   color: #95969b;
   font-size: 12px;
 }
 
-.row .overview-cards .card-item .card-body .title-amount .amount {
+.ant-layout-content .row .overview-cards .card-item .card-body .title-amount .amount {
   font-weight: 600;
 }
 
-.row .overview-cards .card-item .card-footer {
+.ant-layout-content .row .overview-cards .card-item .card-footer {
   background-color: #f9fafc;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 
-.row .overview-cards .card-item .card-footer p {
+.ant-layout-content .row .overview-cards .card-item .card-footer p {
   color: #1890ff;
   cursor: pointer;
 }
 
-.row .ant-table-wrapper {
+.ant-layout-content .row .ant-table-wrapper {
   width: 100%;
+}
+
+.ant-layout-content .editable-add-btn {
+  margin-bottom: 8px;
 }
 
