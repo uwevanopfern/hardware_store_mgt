@@ -3,7 +3,7 @@
     <a-button class="editable-add-btn" @click="showModal" type="primary">
       Add
     </a-button>
-    <a-table :data-source="data" :columns="columns">
+    <a-table :data-source="products" :columns="columns">
       <div
         slot="filterDropdown"
         slot-scope="{
@@ -76,14 +76,15 @@
       title="New product"
       :visible="visible"
       :confirm-loading="confirmLoading"
-      @ok="handleOk"
+      @ok="saveProduct"
       @cancel="handleCancel"
     >
-      <a-form :form="form">
+      <a-form :form="form" @submit.prevent="saveProduct">
         <a-form-item
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Name"
+          v-model="productForm.name"
         >
           <a-input
             v-decorator="[
@@ -101,6 +102,7 @@
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Category"
+          v-model="productForm.category"
         >
           <a-input
             v-decorator="[
@@ -121,6 +123,7 @@
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Manufacturer"
+          v-model="productForm.manufacturer"
         >
           <a-input
             v-decorator="[
@@ -141,6 +144,7 @@
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Purchase price"
+          v-model="productForm.purchased_price"
         >
           <a-input
             v-decorator="[
@@ -161,6 +165,7 @@
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Unit price"
+          v-model="productForm.unit_price"
         >
           <a-input
             v-decorator="[
@@ -181,6 +186,7 @@
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Weight"
+          v-model="productForm.weight"
         >
           <a-input
             v-decorator="[
@@ -201,6 +207,7 @@
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Quantity"
+          v-model="productForm.quantity"
         >
           <a-input
             v-decorator="[
@@ -223,32 +230,6 @@
 </template>
 
 <script>
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-];
 const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 12 },
@@ -260,7 +241,6 @@ const formTailLayout = {
 export default {
   data() {
     return {
-      data,
       searchText: "",
       searchInput: null,
       searchedColumn: "",
@@ -327,7 +307,7 @@ export default {
         },
         {
           title: "Purchase price",
-          dataIndex: "purchase price",
+          dataIndex: "stock.purchased_price",
           key: "purchase price",
           scopedSlots: {
             filterDropdown: "filterDropdown",
@@ -349,7 +329,7 @@ export default {
         },
         {
           title: "Unit price",
-          dataIndex: "unit price",
+          dataIndex: "stock.unit_price",
           key: "unit price",
           scopedSlots: {
             filterDropdown: "filterDropdown",
@@ -393,7 +373,7 @@ export default {
         },
         {
           title: "Quantity",
-          dataIndex: "quantity",
+          dataIndex: "stock.quantity",
           key: "quantity",
           scopedSlots: {
             filterDropdown: "filterDropdown",
@@ -421,7 +401,20 @@ export default {
       formItemLayout,
       formTailLayout,
       form: this.$form.createForm(this, { name: "dynamic_rule" }),
+      productForm: {
+        name: "",
+        quantity: "",
+        manufacturer: "",
+        category: "",
+        weight: "",
+        purchased_price: "",
+        unit_price: "",
+      },
+      products: [],
     };
+  },
+  mounted() {
+    this.loadProduct();
   },
   methods: {
     handleSearch(selectedKeys, confirm, dataIndex) {
@@ -461,6 +454,41 @@ export default {
       this.$nextTick(() => {
         this.form.validateFields(["nickname"], { force: true });
       });
+    },
+    /**
+     * Save product
+     */
+    saveProduct() {
+      try {
+        const res = this.$http.post(
+          this.$store.state.api.path.products,
+          this.productForm,
+          {
+            headers: {
+              Authorization: this.$store.state.api.token,
+            },
+          }
+        );
+        console.log("created", res);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    /**
+     * Load products
+     */
+    async loadProduct() {
+      try {
+        const res = await this.$http.get(this.$store.state.api.path.getProduct, {
+          headers: {
+            Authorization: `Bearer ${this.$store.state.api.token}`,
+          },
+        });
+        console.log("loaded", res.data.data);
+        this.products = res.data.data;
+      } catch (e) {
+        console.error(e);
+      }
     },
   },
 };
