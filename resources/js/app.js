@@ -15,12 +15,20 @@ import { faBalanceScale, faCheckCircle, faSyncAlt } from "@fortawesome/free-soli
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
-
+import VueCurrencyFilter from "vue-currency-filter";
 Vue.use(axios);
 Vue.use(router);
 library.add(faBalanceScale, faSyncAlt, faCheckCircle);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(Antd);
+Vue.use(VueCurrencyFilter, {
+    symbol: "RWF",
+    thousandsSeparator: ",",
+    fractionCount: 1,
+    fractionSeparator: ".",
+    symbolPosition: "back",
+    symbolSpacing: true
+  });
 
 /**
  * The following block of code may be used to automatically register your

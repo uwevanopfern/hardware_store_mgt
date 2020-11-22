@@ -24,6 +24,7 @@ export default new Vuex.Store({
                 register: "api/users", // Admin register
                 postProduct: "api/product", // Create product
                 getProduct: "api/products", // Load product
+                getStock: "api/stocks", // Load current stock
             }
         }
     },
