@@ -50,6 +50,7 @@
         type="search"
         :style="{ color: filtered ? '#108ee9' : undefined }"
       />
+
       <template slot="customRender" slot-scope="text, record, index, column">
         <span v-if="searchText && searchedColumn === column.dataIndex">
           <template
@@ -70,6 +71,7 @@
           {{ text }}
         </template>
       </template>
+      <template slot="purchased_price"> {{purchased_price | currency}} </template>
     </a-table>
     <!-- Create product modal -->
     <a-modal

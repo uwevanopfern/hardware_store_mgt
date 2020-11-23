@@ -84,7 +84,6 @@
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Name"
-          v-model="productForm.name"
         >
           <a-input
             v-decorator="[
@@ -96,13 +95,13 @@
               },
             ]"
             placeholder="Product name"
+            v-model="productForm.name"
           />
         </a-form-item>
         <a-form-item
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Category"
-          v-model="productForm.category"
         >
           <a-input
             v-decorator="[
@@ -117,13 +116,13 @@
               },
             ]"
             placeholder="Category"
+            v-model="productForm.category"
           />
         </a-form-item>
         <a-form-item
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Manufacturer"
-          v-model="productForm.manufacturer"
         >
           <a-input
             v-decorator="[
@@ -138,13 +137,13 @@
               },
             ]"
             placeholder="Manufacturer ltd"
+            v-model="productForm.manufacturer"
           />
         </a-form-item>
         <a-form-item
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Purchase price"
-          v-model="productForm.purchased_price"
         >
           <a-input
             v-decorator="[
@@ -159,13 +158,13 @@
               },
             ]"
             placeholder="0 RWF"
+            v-model="productForm.purchased_price"
           />
         </a-form-item>
         <a-form-item
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Unit price"
-          v-model="productForm.unit_price"
         >
           <a-input
             v-decorator="[
@@ -180,13 +179,13 @@
               },
             ]"
             placeholder="0 RWF"
+            v-model="productForm.unit_price"
           />
         </a-form-item>
         <a-form-item
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Weight"
-          v-model="productForm.weight"
         >
           <a-input
             v-decorator="[
@@ -201,13 +200,13 @@
               },
             ]"
             placeholder="1kg / 1l"
+            v-model="productForm.weight"
           />
         </a-form-item>
         <a-form-item
           :label-col="formItemLayout.labelCol"
           :wrapper-col="formItemLayout.wrapperCol"
           label="Quantity"
-          v-model="productForm.quantity"
         >
           <a-input
             v-decorator="[
@@ -222,6 +221,7 @@
               },
             ]"
             placeholder="0"
+            v-model="productForm.quantity"
           />
         </a-form-item>
       </a-form>
@@ -459,13 +459,14 @@ export default {
      * Save product
      */
     saveProduct() {
+      console.log("form", this.productForm);
       try {
         const res = this.$http.post(
-          this.$store.state.api.path.products,
+          this.$store.state.api.path.postProduct,
           this.productForm,
           {
             headers: {
-              Authorization: this.$store.state.api.token,
+              Authorization: `Bearer ${this.$store.state.api.token}`,
             },
           }
         );
@@ -479,11 +480,14 @@ export default {
      */
     async loadProduct() {
       try {
-        const res = await this.$http.get(this.$store.state.api.path.getProduct, {
-          headers: {
-            Authorization: `Bearer ${this.$store.state.api.token}`,
-          },
-        });
+        const res = await this.$http.get(
+          this.$store.state.api.path.getProduct,
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.state.api.token}`,
+            },
+          }
+        );
         console.log("loaded", res.data.data);
         this.products = res.data.data;
       } catch (e) {

@@ -22,7 +22,7 @@ export default new Vuex.Store({
             path: {
                 login: "api/login", // Admin login
                 register: "api/users", // Admin register
-                postProduct: "api/product", // Create product
+                postProduct: "api/products", // Create product
                 getProduct: "api/products", // Load product
                 getStock: "api/stocks", // Load current stock
             }
